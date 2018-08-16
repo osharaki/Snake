@@ -1,0 +1,1 @@
+An implementation of the classic Snake game with Python and Pygame.
