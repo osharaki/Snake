@@ -1,5 +1,5 @@
 # Snake
-A basic implementation of the classic Snake game with Python and Pygame.
+A basic implementation of the classic Snake game with Python and Pygame. (<em>Built in 2017</em>)
 
 ![A screenshot of the game](/screenshot.png)
 
