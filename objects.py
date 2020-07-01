@@ -89,49 +89,37 @@ class Snake():
         # Hit top
         if self.body[0][0] <= 0:
             if self.direction == Direction.up and GAME_TIME.get_ticks() - self.lastMove >= self.refreshFreq:
-                print("Hit top!")
                 self.hit = True
         # Hit bottom
         if self.body[0][0] >= grid.blocksInCol:
             if self.direction == Direction.down and GAME_TIME.get_ticks() - self.lastMove >= self.refreshFreq:
-                print("Hit bottom!")
                 self.hit = True
         # Hit left
         if self.body[0][1] <= 0:
             if self.direction == Direction.left and GAME_TIME.get_ticks() - self.lastMove >= self.refreshFreq:
-                print("Hit left!")
                 self.hit = True
         # Hit right
         if self.body[0][1] >= grid.blocksInRow:
             if self.direction == Direction.right and GAME_TIME.get_ticks() - self.lastMove >= self.refreshFreq:
-                print("Hit right!")
                 self.hit = True
         # check if snake hit itself
         for i in range(len(self.body)):
             # hit from the top ==> if colHead == colBB and rowHead + 1 == rowBB and direction == down and time limit reached
             if self.body[0][1] == self.body[i][1] and self.body[0][0] + 1 == self.body[i][0]:
                 if self.direction == Direction.down and GAME_TIME.get_ticks() - self.lastMove >= self.refreshFreq:
-                    print("Self hit top!")
                     self.hit = True
             # hit from the bottom ==> if colHead == colBB and rowHead - 1 == rowBB and direction == up and time limit reached
             elif self.body[0][1] == self.body[i][1] and self.body[0][0] - 1 == self.body[i][0]:
                 if self.direction == Direction.up and GAME_TIME.get_ticks() - self.lastMove >= self.refreshFreq:
-                    print("Self hit bottom!")
                     self.hit = True
             # hit from the left ==> if rowHead == rowBB and colHead + 1 == colBB and direction == right and time limit reached
             elif self.body[0][0] == self.body[i][0] and self.body[0][1] + 1 == self.body[i][1]:
                 if self.direction == Direction.right and GAME_TIME.get_ticks() - self.lastMove >= self.refreshFreq:
-                    print("Self hit left!")
                     self.hit = True
             # hit from the right ==> if rowHead == rowBB and colHead - 1 == colBB and direction == left and time limit reached
             elif self.body[0][0] == self.body[i][0] and self.body[0][1] - 1 == self.body[i][1]:
                 if self.direction == Direction.left and GAME_TIME.get_ticks() - self.lastMove >= self.refreshFreq:
-                    print("Self hit right!")
                     self.hit = True
-
-    def printRowCol(self):
-        for bb in self.body:
-            print("block " + str(bb) + " Row: " + str(bb[0]) + " block " + str(bb) + " Col: " + str(bb[1]))
 
 class Dot():
 
@@ -166,30 +154,9 @@ class Dot():
                 else:
                     i += 1
             self.pos = randPos
-            #print("changed!")
             self.timePlaced = GAME_TIME.get_ticks()
             self.eaten = False
-        '''
-        elif GAME_TIME.get_ticks() - self.timePlaced >= self.timeAllowed:
-            randPos = (random.randint(0, len(field.grid[0]) - 1), random.randint(0, len(field.grid) - 1))
-            for i in range(len(snake.body)):
-                if randPos == snake.body[i]:
-                    randPos = (random.randint(0, len(field.grid[0]) - 1), random.randint(0, len(field.grid) - 1))
-                    i = 0
-                else:
-                    i += 1
-            self.pos = randPos
-            print("changed!")
-            self.timePlaced = GAME_TIME.get_ticks()
-            self.eaten = False
-        '''
-    '''
-    When dot is eaten:
-        -self.eaten will be set to True
-        -score will be calculated
-        -time it took to eat dot will be calculated
-        -snake.eaten will be increased
-    '''
+        
     def checkEaten(self, field, snake):
         # has dot been eaten?
         if snake.body[0][0] == self.pos[0] and snake.body[0][1] == self.pos[1]:
@@ -197,27 +164,18 @@ class Dot():
             self.scoreCalc(snake)
             self.numEaten += 1
             if self.numEaten % 3 == 0:
-                # if Ylastbb > Ysecondlastbb and Xlastbb == Xsecondlastbb: add 1 to Y last bb as new pos of new bb
                 if snake.body[len(snake.body) - 1][0] > snake.body[len(snake.body) - 2][0] \
                         and snake.body[len(snake.body) - 1][1] == snake.body[len(snake.body) - 2][1]:
                     snake.body.append((snake.body[len(snake.body) - 1][0] + 1, snake.body[len(snake.body) - 1][1]))
-                    #print("added bb!")
-                # if Ylastbb == Ysecondlastbb and Xlastbb > Xsecondlastbb: add 1 to X last bb as new pos of new bb
                 if snake.body[len(snake.body) - 1][0] == snake.body[len(snake.body) - 2][0] \
                         and snake.body[len(snake.body) - 1][1] > snake.body[len(snake.body) - 2][1]:
                     snake.body.append((snake.body[len(snake.body) - 1][0], snake.body[len(snake.body) - 1][1] + 1))
-                    #print("added bb!")
-                # if Ylastbb == Ysecondlastbb and Xlastbb < Xsecondlastbb: sub 1 from X last bb as new pos of new bb
                 if snake.body[len(snake.body) - 1][0] == snake.body[len(snake.body) - 2][0] \
                         and snake.body[len(snake.body) - 1][1] < snake.body[len(snake.body) - 2][1]:
                     snake.body.append((snake.body[len(snake.body) - 1][0], snake.body[len(snake.body) - 1][1] - 1))
-                    #print("added bb!")
-                # if Ylastbb < Ysecondlastbb and Xlastbb == Xsecondlastbb: sub 1 from Y last bb as new pos of new bb
                 if snake.body[len(snake.body) - 1][0] < snake.body[len(snake.body) - 2][0] \
                         and snake.body[len(snake.body) - 1][1] == snake.body[len(snake.body) - 2][1]:
                     snake.body.append((snake.body[len(snake.body) - 1][0] - 1, snake.body[len(snake.body) - 1][1]))
-                    #print("added bb!")
                 snake.refreshFreq -= 5
-                print("added bb!")
     def scoreCalc(self, snake):
         snake.score += self.dotScore
