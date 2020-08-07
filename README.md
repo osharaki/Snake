@@ -1,5 +1,5 @@
-# Snake :snake:
-A basic implementation of the classic Snake game in Python and Pygame. (<em>Built in 2016</em>)
+# Snake :snake: (<em>Built in 2016</em>)
+A basic implementation of the classic Snake game in Python and Pygame.
 
 ![A screenshot of the game](/screenshot.png)
 
